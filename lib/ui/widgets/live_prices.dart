@@ -57,7 +57,7 @@ class _LivePricesState extends State<LivePrices> {
       separatorBuilder: (context, index) => const SizedBox(width: 20),
       itemBuilder: (context, index) => _LivePriceCard(
         iconUrl: tradeList[index].iconUrl!,
-        title: '${tradeList[index].title1}${tradeList[index].title2}',
+        title: tradeList[index].title1 + tradeList[index].title2,
         price: tradeList[index].price ?? '-',
         takerSide: tradeList[index].takerSide,
         lastUpdated: lastUpdated,
@@ -149,7 +149,8 @@ class _LivePriceCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: _cardTitleStyle,
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -192,7 +193,7 @@ class _LivePriceCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               lastUpdated != null
-                  ? 'Updated: \\${DateFormat("HH:mm:ss.SSS").format(lastUpdated!)} (\\${((DateTime.now().difference(lastUpdated!).inMilliseconds) / 1000).toStringAsFixed(2)} s ago)'
+                  ? 'Updated: ${DateFormat("HH:mm:ss.SSS").format(lastUpdated!)} (${_formatTimeAgo(lastUpdated!)})'
                   : 'Updated: -',
               style: _updatedStyle,
             ),
@@ -200,6 +201,12 @@ class _LivePriceCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formatTimeAgo(DateTime lastUpdated) {
+    final diff = DateTime.now().difference(lastUpdated).inMilliseconds;
+    if (diff < 1000) return 'just now';
+    return '${(diff / 1000).toStringAsFixed(2)}s ago';
   }
 }
 
