@@ -5,6 +5,7 @@ import '/service/repository.dart';
 import '/ui/library.dart';
 import '/cubit/crypto_asset_cubit.dart';
 import '/cubit/live_prices_cubit.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,10 +43,10 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider(
                 create: (BuildContext context) =>
-                    CryptoAssetCubit(getIt<IRepository>()),
+                    CryptoAssetCubit(GetIt.I<IRepository>()),
               ),
               BlocProvider(
-                  create: (BuildContext context) => getIt<LivePricesCubit>())
+                  create: (BuildContext context) => GetIt.I<LivePricesCubit>())
             ],
             child: const HomeScreen(),
           ),
