@@ -31,10 +31,12 @@ class _LivePricesState extends State<LivePrices> {
               if (snapshot.hasData) {
                 lastUpdated = DateTime.now();
                 final realTrade = snapshot.data as LivePrice;
-                for (var item in tradeList) {
-                  if (item.symbolId == realTrade.symbolId) {
-                    item.price = realTrade.price;
-                    item.takerSide = realTrade.takerSide;
+                for (var i = 0; i < tradeList.length; i++) {
+                  if (tradeList[i].symbolId == realTrade.symbolId) {
+                    tradeList[i] = tradeList[i].copyWith(
+                      price: realTrade.price,
+                      takerSide: realTrade.takerSide,
+                    );
                   }
                 }
               }

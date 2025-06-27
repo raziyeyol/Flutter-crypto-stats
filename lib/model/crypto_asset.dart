@@ -1,10 +1,15 @@
-class CryptoAsset {
-  String assetId;
-  String url;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  CryptoAsset(this.assetId, this.url);
+part 'crypto_asset.freezed.dart';
+part 'crypto_asset.g.dart';
 
-  CryptoAsset.fromJson(Map<String, dynamic> json)
-      : assetId = json['asset_id'],
-        url = json['url'].toString();
+@freezed
+class CryptoAsset with _$CryptoAsset {
+  const factory CryptoAsset({
+    required String assetId,
+    required String url,
+  }) = _CryptoAsset;
+
+  factory CryptoAsset.fromJson(Map<String, dynamic> json) =>
+      _$CryptoAssetFromJson(json);
 }
