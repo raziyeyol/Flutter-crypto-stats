@@ -42,10 +42,10 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider(
                 create: (BuildContext context) =>
-                    CryptoAssetCubit(sl<IRepository>()),
+                    CryptoAssetCubit(getIt<IRepository>()),
               ),
               BlocProvider(
-                  create: (BuildContext context) => sl<LivePricesCubit>())
+                  create: (BuildContext context) => getIt<LivePricesCubit>())
             ],
             child: const HomeScreen(),
           ),
