@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
         home: Scaffold(
           appBar: AppBar(
-            title: Text('Crypto Dashboard'),
+            title: Text('Crypto Stats'),
           ),
           body: MultiBlocProvider(
             providers: [
