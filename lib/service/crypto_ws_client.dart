@@ -55,15 +55,29 @@ class MockWsClient implements CryptoWsClient {
       'COINBASE_SPOT_ADA_USD',
     ];
     final sides = ['buy', 'sell'];
+    // Emit initial value for each symbol immediately
+    Future.microtask(() {
+      for (int i = 0; i < symbols.length; i++) {
+        _controller?.add(LivePrice(
+          title1: symbols[i].split('_')[2],
+          title2: '/${symbols[i].split('_')[3]}',
+          symbolId: symbols[i],
+          price: (30000 + i * 1000).toString(),
+          takerSide: sides[i % sides.length],
+        ));
+      }
+    });
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       final symbol = symbols[tick % symbols.length];
       final price = (30000 + tick * 10).toString();
       final takerSide = sides[tick % sides.length];
-      _controller?.add(LivePrice.fromJson({
-        'symbol_id': symbol,
-        'price': price,
-        'taker_side': takerSide,
-      }));
+      _controller?.add(LivePrice(
+        title1: symbol.split('_')[2],
+        title2: '/${symbol.split('_')[3]}',
+        symbolId: symbol,
+        price: price,
+        takerSide: takerSide,
+      ));
       tick++;
     });
     return _controller!.stream;
