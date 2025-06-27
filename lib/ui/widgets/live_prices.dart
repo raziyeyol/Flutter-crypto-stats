@@ -1,7 +1,5 @@
 part of ui.library;
 
-// import 'package:intl/intl.dart';
-
 class LivePrices extends StatefulWidget {
   const LivePrices({Key? key}) : super(key: key);
 
@@ -124,6 +122,8 @@ class _LivePriceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isBuy = takerSide.toLowerCase() == 'buy';
+    final formattedPrice = NumberFormat.currency(symbol: '\$', decimalDigits: 0)
+        .format(int.tryParse(price.replaceAll(',', '')) ?? 0);
     return Card(
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -186,8 +186,8 @@ class _LivePriceCard extends StatelessWidget {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
               child: Text(
-                price,
-                key: ValueKey(price),
+                formattedPrice,
+                key: ValueKey(formattedPrice),
                 style: _priceStyle,
               ),
             ),
