@@ -191,7 +191,9 @@ class _LivePriceCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Updated: ${lastUpdated != null ? DateFormat.Hms().format(lastUpdated!) : '-'}',
+              lastUpdated != null
+                  ? 'Updated: \\${DateFormat("HH:mm:ss.SSS").format(lastUpdated!)} (\\${((DateTime.now().difference(lastUpdated!).inMilliseconds) / 1000).toStringAsFixed(2)} s ago)'
+                  : 'Updated: -',
               style: _updatedStyle,
             ),
           ],

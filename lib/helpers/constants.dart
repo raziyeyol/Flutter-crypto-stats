@@ -1,5 +1,6 @@
 final baseUrl = 'https://rest.coinapi.io/v1/assets/icons/100';
-final apiKey = '9A5F80B0-1FFB-4703-9F83-09F2B8202212';
+final apiKey = '';
+// TODO: Set your CoinAPI key here. Do not commit your real key to public repositories.
 final webSocketUrl = 'wss://ws-sandbox.coinapi.io/v1/';
 
 //ui constants
