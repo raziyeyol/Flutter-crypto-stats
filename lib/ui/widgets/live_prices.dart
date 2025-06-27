@@ -30,8 +30,7 @@ class _LivePricesState extends State<LivePrices> {
                   (item) => (item.price != null && item.price!.isNotEmpty));
               if (snapshot.hasData) {
                 lastUpdated = DateTime.now();
-                final realTrade =
-                    LivePrice.fromJson(jsonDecode(snapshot.data.toString()));
+                final realTrade = snapshot.data as LivePrice;
                 for (var item in tradeList) {
                   if (item.symbolId == realTrade.symbolId) {
                     item.price = realTrade.price;
