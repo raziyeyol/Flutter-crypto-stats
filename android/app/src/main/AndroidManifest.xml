@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.crypto_stats">
+    package="com.example.mobile_app_test">
    <application
-        android:label="Crypto Stats"
+        android:label="Crypto Tracking"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
