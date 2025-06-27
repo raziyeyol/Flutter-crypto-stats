@@ -1,14 +1,29 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:dio/dio.dart';
 import '/service/network_service.dart';
 import '/service/repository.dart';
+import '/cubit/live_prices_cubit.dart';
 
-GetIt injector = GetIt.instance;
+final sl = GetIt.instance;
 
-void initializeDependency() {
-  injector.registerSingleton<Dio>(Dio());
+void initDependencies({required bool mock}) {
+  // Dio for static endpoints (logos, user profile, etc.)
+  sl.registerLazySingleton<Dio>(() => Dio(BaseOptions(
+        connectTimeout: 5000,
+        receiveTimeout: 5000,
+      )));
 
-  injector
-      .registerSingleton<INetworkService>(NetworkService(injector.get<Dio>()));
-  injector.registerSingleton<IRepository>(MockRepository());
+  // Network service
+  sl.registerLazySingleton<INetworkService>(() => NetworkService(sl<Dio>()));
+
+  // Repository (mock or live)
+  if (mock) {
+    sl.registerLazySingleton<IRepository>(() => MockRepository());
+  } else {
+    sl.registerLazySingleton<IRepository>(
+        () => Repository(sl<INetworkService>()));
+  }
+
+  // Cubit factory
+  sl.registerFactory(() => LivePricesCubit(mock: mock));
 }

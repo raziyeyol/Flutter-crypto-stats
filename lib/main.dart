@@ -8,7 +8,7 @@ import '/cubit/live_prices_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeDependency();
+  initDependencies(mock: true);
   runApp(MyApp());
 }
 
@@ -42,10 +42,10 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider(
                 create: (BuildContext context) =>
-                    CryptoAssetCubit(injector.get<IRepository>()),
+                    CryptoAssetCubit(sl<IRepository>()),
               ),
               BlocProvider(
-                  create: (BuildContext context) => LivePricesCubit(mock: true))
+                  create: (BuildContext context) => sl<LivePricesCubit>())
             ],
             child: const HomeScreen(),
           ),
